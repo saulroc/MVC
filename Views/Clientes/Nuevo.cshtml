@@ -1,0 +1,20 @@
+﻿@model Cliente
+@{
+    ViewData["Title"] = "Nuevo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Nuevo Cliente</h1>
+@using (Html.BeginForm("Crear", "Clientes"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre, new { @class="form-control" } )
+    </div>
+
+    <div class="form-check">
+       <label for="EstaSubscritoAlBoletinInformativo">¿Está subscrito al boletin infromativo?</label>
+        @Html.CheckBoxFor(m => m.EstaSubscritoAlBoletinInformativo, new { @class="form-check-input" } )
+    </div>
+   
+}

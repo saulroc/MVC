@@ -1,0 +1,22 @@
+﻿@model MVC.ViewModels.PeliculaAleatoriaViewModel
+@{
+    ViewData["Title"] = "Películas";
+}
+@{
+    string clase = Model.Clientes.Count > 0 ? "popular": null;
+}
+<h2 class="@clase">@Model.Pelicula.Titulo</h2>
+@if(Model.Clientes.Count == 0)
+{
+    <text>Nadie ha alquilado esta película todavia.</text>
+}
+else
+{
+    <ul>
+        @foreach(var cliente in Model.Clientes)
+        {
+            <li>@cliente.Nombre</li>
+        }
+    </ul>
+}
+
