@@ -5,3 +5,9 @@
 @{
 }
 <h1>@Model.Nombre</h1>
+<text>Tipo de Membresia:<strong>@Model.TipoMembresia.Nombre</strong></text>
+
+@if(Model.FechaDeNacimiento.HasValue)
+{
+    <br /><text>Fecha de Nacimiento:<strong>@Model.FechaDeNacimiento</strong></text>
+}

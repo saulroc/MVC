@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC.Models
 {
@@ -14,5 +15,6 @@ namespace MVC.Models
         public bool EstaSubscritoAlBoletinInformativo { get; set; }
         public virtual TipoMembresia TipoMembresia { get; set; }
         public byte TipoMembresiaId { get; set; }
+        public DateTime? FechaDeNacimiento { get; set; }
     }
 }

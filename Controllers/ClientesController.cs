@@ -31,7 +31,7 @@ namespace MVC.Controllers
 
         public IActionResult Detalles(int id)
         {
-            var cliente = contexto.Clientes.FirstOrDefault(c => c.Id == id);
+            var cliente = contexto.Clientes.Include(c => c.TipoMembresia).FirstOrDefault(c => c.Id == id);
             if (cliente == null)
                 return NotFound();
             else
