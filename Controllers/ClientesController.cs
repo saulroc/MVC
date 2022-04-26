@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVC.BaseDeDatos;
+using MVC.Models;
+using MVC.ViewModels;
 using System.Linq;
 
 namespace MVC.Controllers
@@ -26,16 +28,37 @@ namespace MVC.Controllers
 
         public IActionResult Nuevo()
         {
-            return View();
+            var viewModel = new NuevoClienteViewModel()
+            {
+                Cliente = new Cliente(),
+                TiposMembresia = contexto.TipoMembresia.ToList()
+            };
+            return View(viewModel);
         }
 
         public IActionResult Detalles(int id)
         {
-            var cliente = contexto.Clientes.Include(c => c.TipoMembresia).FirstOrDefault(c => c.Id == id);
+            var cliente = contexto.Clientes.Include(c => c.TipoMembresia).SingleOrDefault(c => c.Id == id);
             if (cliente == null)
                 return NotFound();
             else
                 return View(cliente);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var cliente = contexto.Clientes.Include(c => c.TipoMembresia).SingleOrDefault(c => c.Id == id);
+            if (cliente == null)
+                return NotFound();
+            else
+                return View(cliente);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Cliente cliente)
+        {
+            //TryUpdateModelAsync(cliente);
+            return RedirectToAction("Index", "Clientes");
         }
 
     }

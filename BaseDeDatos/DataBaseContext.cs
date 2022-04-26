@@ -7,6 +7,7 @@ namespace MVC.BaseDeDatos
     {
         public DbSet<Cliente> Clientes { get; set;  }
         public DbSet<Pelicula> Peliculas { get; set;}
+        public DbSet<TipoMembresia> TipoMembresia { get; set; }
 
         public string ConnectionString => "Server=Localhost;Database=Vidly;Trusted_Connection=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder options)

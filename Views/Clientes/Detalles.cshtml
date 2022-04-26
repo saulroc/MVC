@@ -9,5 +9,5 @@
 
 @if(Model.FechaDeNacimiento.HasValue)
 {
-    <br /><text>Fecha de Nacimiento:<strong>@Model.FechaDeNacimiento</strong></text>
+    <br /><text>Fecha de Nacimiento:<strong>@Model.FechaDeNacimiento.Value.ToShortDateString()</strong></text>
 }

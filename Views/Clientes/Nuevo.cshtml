@@ -1,4 +1,4 @@
-﻿@model Cliente
+﻿@model MVC.ViewModels.NuevoClienteViewModel
 @{
     ViewData["Title"] = "Nuevo";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,13 +8,25 @@
 @using (Html.BeginForm("Crear", "Clientes"))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Nombre)
-        @Html.TextBoxFor(m => m.Nombre, new { @class="form-control" } )
+        @Html.LabelFor(m => m.Cliente.Nombre)
+        @Html.TextBoxFor(m => m.Cliente.Nombre, new { @class="form-control md-6" } )
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cliente.FechaDeNacimiento, "Fecha de Nacimiento")
+        @Html.TextBoxFor(m => m.Cliente.FechaDeNacimiento, new { @class="form-control md-6" } )
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cliente.TipoMembresiaId, "Tipo de Membresia")
+        @Html.DropDownListFor(m => m.Cliente.TipoMembresiaId, new SelectList(Model.TiposMembresia, "Id", "Nombre"), "Seleccione un tipo de membresia", new { @class="form-control" } )
     </div>
 
     <div class="form-check">
-       <label for="EstaSubscritoAlBoletinInformativo">¿Está subscrito al boletin infromativo?</label>
-        @Html.CheckBoxFor(m => m.EstaSubscritoAlBoletinInformativo, new { @class="form-check-input" } )
+        @Html.LabelFor(m => m.Cliente.EstaSubscritoAlBoletinInformativo, "¿Está subscrito al boletin infromativo?")
+        @Html.CheckBoxFor(m => m.Cliente.EstaSubscritoAlBoletinInformativo, new { @class="form-check-input md-6" } )
     </div>
+
+    
    
 }
