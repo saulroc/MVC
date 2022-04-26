@@ -6,6 +6,8 @@ namespace MVC.BaseDeDatos
     public class DataBaseContext : DbContext
     {
         public DbSet<Cliente> Clientes { get; set;  }
+        public DbSet<Pelicula> Peliculas { get; set;}
+
         public string ConnectionString => "Server=Localhost;Database=Vidly;Trusted_Connection=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlServer(ConnectionString);

@@ -4,14 +4,16 @@ using MVC.BaseDeDatos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVC.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220426072208_AddGeneroEntity")]
+    partial class AddGeneroEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,10 +51,8 @@ namespace MVC.Migrations
 
             modelBuilder.Entity("MVC.Models.Genero", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<byte>("Id")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -78,8 +78,8 @@ namespace MVC.Migrations
                     b.Property<DateTime>("FechaDeRegistro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GeneroId")
-                        .HasColumnType("int");
+                    b.Property<byte>("GeneroId")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(max)");

@@ -16,6 +16,7 @@ else
             <tr>
                 <th>Id.</th>
                 <th>Título</th>
+                <th>Genero</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +24,8 @@ else
             {
                 <tr>
                     <td>@pelicula.Id</td>
-                    <td>@pelicula.Titulo</td>
+                    <td>@Html.ActionLink(@pelicula.Titulo, "Detalles", new { id = pelicula.Id})</td>
+                    <td>@pelicula.Genero.Nombre</td>
                 </tr>
             }        
         </tbody>

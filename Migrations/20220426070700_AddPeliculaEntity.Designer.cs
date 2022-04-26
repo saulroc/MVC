@@ -4,14 +4,16 @@ using MVC.BaseDeDatos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVC.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220426070700_AddPeliculaEntity")]
+    partial class AddPeliculaEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,21 +49,6 @@ namespace MVC.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("MVC.Models.Genero", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genero");
-                });
-
             modelBuilder.Entity("MVC.Models.Pelicula", b =>
                 {
                     b.Property<int>("Id")
@@ -78,15 +65,10 @@ namespace MVC.Migrations
                     b.Property<DateTime>("FechaDeRegistro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GeneroId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GeneroId");
 
                     b.ToTable("Peliculas");
                 });
@@ -118,15 +100,6 @@ namespace MVC.Migrations
                     b.HasOne("MVC.Models.TipoMembresia", "TipoMembresia")
                         .WithMany()
                         .HasForeignKey("TipoMembresiaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MVC.Models.Pelicula", b =>
-                {
-                    b.HasOne("MVC.Models.Genero", "Genero")
-                        .WithMany()
-                        .HasForeignKey("GeneroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

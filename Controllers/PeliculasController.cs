@@ -1,12 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MVC.BaseDeDatos;
 using MVC.Models;
 using MVC.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MVC.Controllers
 {
     public class PeliculasController : Controller
     {
+        private DataBaseContext contexto;
+        public PeliculasController()
+        {
+            contexto= new DataBaseContext();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            contexto.Dispose();
+        }
+
         public IActionResult Aleatorio()
         {
             var pelicula = new Pelicula() {  Id = 1, Titulo = "Gorilas en la niebla"};
@@ -25,7 +38,13 @@ namespace MVC.Controllers
 
         public IActionResult Index()
         {
-            return View(GetPeliculas());
+            return View(contexto.Peliculas.Include(p => p.Genero).ToList());
+        }
+
+        public IActionResult Detalles(int id)
+        {
+            var pelicula = contexto.Peliculas.Include(p => p.Genero).SingleOrDefault(p => p.Id == id);
+            return View(pelicula);
         }
 
         [Route("peliculas/porFecha/{year:int}/{month:int}")]
@@ -33,14 +52,6 @@ namespace MVC.Controllers
         {
             return Content($"Año: {year}, Mes: {month}");
         }
-
-        private List<Pelicula> GetPeliculas()
-        {
-            return new List<Pelicula>()
-            {
-                new Pelicula() { Id = 1, Titulo = "Gorilas en la Niebla" },
-                new Pelicula() { Id = 2, Titulo = "Men In Black" }
-            };
-        }
+        
     }
 }

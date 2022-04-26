@@ -1,0 +1,14 @@
+﻿@model Pelicula
+@{
+    ViewData["Title"] = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Titulo</h1>
+<ul>
+    <li>Genero:<strong>@Model.Genero.Nombre</strong></li>
+    <li>Fecha de Realización:<strong>@Model.FechaDeRealizacion.ToShortDateString()</strong></li>
+    <li>Fecha de Alta en el Sistema:<strong>@Model.FechaDeRegistro.ToShortDateString()</strong></li>
+    <li>Cantidad en stock:<strong>@Model.Cantidad</strong></li>
+</ul>
+
