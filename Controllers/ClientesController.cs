@@ -45,7 +45,7 @@ namespace MVC.Controllers
                 return View(cliente);
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Editar(int id)
         {
             var cliente = contexto.Clientes.Include(c => c.TipoMembresia).SingleOrDefault(c => c.Id == id);
             if (cliente == null)
@@ -65,6 +65,13 @@ namespace MVC.Controllers
         [HttpPost]
         public IActionResult Guardar(Cliente cliente)
         {
+            if (!ModelState.IsValid)
+                return View("FormularioCliente", new FormularioClienteViewModel()
+                {
+                    Cliente = cliente,
+                    TiposMembresia = contexto.TipoMembresia.ToList()
+                });
+
             if (cliente.Id == 0)
             {
                 contexto.Clientes.Add(cliente);

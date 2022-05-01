@@ -4,25 +4,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@Model.Cliente.Id == 0 ? "Nuevo" : "Edición" Cliente</h1>
+@if(Model.Cliente.Id == 0)
+{
+    <h1>Nuevo Cliente</h1>
+}
+else
+{
+    <h1>Editar Cliente</h1>    
+}
+
 @using (Html.BeginForm("Guardar", "Clientes"))
 {
+    @Html.ValidationSummary(true,"Por favor, corrija los siguientes errores.", new {@class="text-danger"})
     <div class="form-group">
         @Html.LabelFor(m => m.Cliente.Nombre)
         @Html.TextBoxFor(m => m.Cliente.Nombre, new { @class="form-control md-6" } )
-        @Html.ValidationMessageFor(m => m.Cliente.Nombre)
+        @Html.ValidationMessageFor(m => m.Cliente.Nombre, "", new { @class="text-danger"})
+    </div>    
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cliente.TipoMembresiaId, "Tipo de Membresia")
+        @Html.DropDownListFor(m => m.Cliente.TipoMembresiaId, new SelectList(Model.TiposMembresia, "Id", "Nombre"), "Seleccione un tipo de membresia", new { @class="form-control" } )
+        @Html.ValidationMessageFor(m => m.Cliente.TipoMembresiaId)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Cliente.FechaDeNacimiento, "Fecha de Nacimiento")
         @Html.TextBoxFor(m => m.Cliente.FechaDeNacimiento, new { @class="form-control md-6" } )
         @Html.ValidationMessageFor(m => m.Cliente.FechaDeNacimiento)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Cliente.TipoMembresiaId, "Tipo de Membresia")
-        @Html.DropDownListFor(m => m.Cliente.TipoMembresiaId, new SelectList(Model.TiposMembresia, "Id", "Nombre"), "Seleccione un tipo de membresia", new { @class="form-control" } )
-        @Html.ValidationMessageFor(m => m.Cliente.TipoMembresiaId)
     </div>
 
     <div class="form-check">
@@ -32,6 +41,12 @@
     </div>
 
     @Html.HiddenFor(m => m.Cliente.Id)
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Guardar</button>
    
+}
+
+@section scripts
+{
+    @Html.Partial("_ValidationScriptsPartial")
 }
