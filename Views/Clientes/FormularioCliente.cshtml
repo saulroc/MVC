@@ -1,32 +1,37 @@
-﻿@model MVC.ViewModels.NuevoClienteViewModel
+﻿@model MVC.ViewModels.FormularioClienteViewModel
 @{
-    ViewData["Title"] = "Nuevo";
+    ViewData["Title"] = Model.Cliente.Id == 0 ? "Nuevo" : "Edición";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Nuevo Cliente</h1>
-@using (Html.BeginForm("Crear", "Clientes"))
+<h1>@Model.Cliente.Id == 0 ? "Nuevo" : "Edición" Cliente</h1>
+@using (Html.BeginForm("Guardar", "Clientes"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Cliente.Nombre)
         @Html.TextBoxFor(m => m.Cliente.Nombre, new { @class="form-control md-6" } )
+        @Html.ValidationMessageFor(m => m.Cliente.Nombre)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Cliente.FechaDeNacimiento, "Fecha de Nacimiento")
         @Html.TextBoxFor(m => m.Cliente.FechaDeNacimiento, new { @class="form-control md-6" } )
+        @Html.ValidationMessageFor(m => m.Cliente.FechaDeNacimiento)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Cliente.TipoMembresiaId, "Tipo de Membresia")
         @Html.DropDownListFor(m => m.Cliente.TipoMembresiaId, new SelectList(Model.TiposMembresia, "Id", "Nombre"), "Seleccione un tipo de membresia", new { @class="form-control" } )
+        @Html.ValidationMessageFor(m => m.Cliente.TipoMembresiaId)
     </div>
 
     <div class="form-check">
         @Html.LabelFor(m => m.Cliente.EstaSubscritoAlBoletinInformativo, "¿Está subscrito al boletin infromativo?")
         @Html.CheckBoxFor(m => m.Cliente.EstaSubscritoAlBoletinInformativo, new { @class="form-check-input md-6" } )
+        @Html.ValidationMessageFor(m => m.Cliente.EstaSubscritoAlBoletinInformativo)
     </div>
 
-    
+    @Html.HiddenFor(m => m.Cliente.Id)
+    <button type="submit" class="btn btn-primary">Guardar</button>
    
 }

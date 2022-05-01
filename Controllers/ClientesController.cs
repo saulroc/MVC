@@ -28,12 +28,12 @@ namespace MVC.Controllers
 
         public IActionResult Nuevo()
         {
-            var viewModel = new NuevoClienteViewModel()
+            var viewModel = new FormularioClienteViewModel()
             {
                 Cliente = new Cliente(),
                 TiposMembresia = contexto.TipoMembresia.ToList()
             };
-            return View(viewModel);
+            return View("FormularioCliente", viewModel);
         }
 
         public IActionResult Detalles(int id)
@@ -51,13 +51,34 @@ namespace MVC.Controllers
             if (cliente == null)
                 return NotFound();
             else
-                return View(cliente);
+            {
+                var viewModel = new FormularioClienteViewModel()
+                {
+                    Cliente = cliente,
+                    TiposMembresia = contexto.TipoMembresia.ToList()
+                };
+                return View("FormularioCliente", viewModel);
+            }
+                
         }
 
         [HttpPost]
-        public IActionResult Create(Cliente cliente)
+        public IActionResult Guardar(Cliente cliente)
         {
-            //TryUpdateModelAsync(cliente);
+            if (cliente.Id == 0)
+            {
+                contexto.Clientes.Add(cliente);
+            }
+            else
+            {
+                var clienteDB = contexto.Clientes.Single(c => c.Id == cliente.Id);
+                clienteDB.Nombre = cliente.Nombre;
+                clienteDB.FechaDeNacimiento = cliente.FechaDeNacimiento;
+                clienteDB.TipoMembresiaId = cliente.TipoMembresiaId;
+                clienteDB.EstaSubscritoAlBoletinInformativo = cliente.EstaSubscritoAlBoletinInformativo;
+            }
+
+            contexto.SaveChanges();
             return RedirectToAction("Index", "Clientes");
         }
 
