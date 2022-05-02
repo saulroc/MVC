@@ -28,12 +28,12 @@ namespace MVC.Controllers
 
         public IActionResult Nuevo()
         {
-            var viewModel = new NuevoClienteViewModel()
+            var viewModel = new FormularioClienteViewModel()
             {
                 Cliente = new Cliente(),
                 TiposMembresia = contexto.TipoMembresia.ToList()
             };
-            return View(viewModel);
+            return View("FormularioCliente", viewModel);
         }
 
         public IActionResult Detalles(int id)
@@ -45,19 +45,47 @@ namespace MVC.Controllers
                 return View(cliente);
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Editar(int id)
         {
             var cliente = contexto.Clientes.Include(c => c.TipoMembresia).SingleOrDefault(c => c.Id == id);
             if (cliente == null)
                 return NotFound();
             else
-                return View(cliente);
+            {
+                var viewModel = new FormularioClienteViewModel()
+                {
+                    Cliente = cliente,
+                    TiposMembresia = contexto.TipoMembresia.ToList()
+                };
+                return View("FormularioCliente", viewModel);
+            }
+                
         }
 
         [HttpPost]
-        public IActionResult Create(Cliente cliente)
+        public IActionResult Guardar(Cliente cliente)
         {
-            //TryUpdateModelAsync(cliente);
+            if (!ModelState.IsValid)
+                return View("FormularioCliente", new FormularioClienteViewModel()
+                {
+                    Cliente = cliente,
+                    TiposMembresia = contexto.TipoMembresia.ToList()
+                });
+
+            if (cliente.Id == 0)
+            {
+                contexto.Clientes.Add(cliente);
+            }
+            else
+            {
+                var clienteDB = contexto.Clientes.Single(c => c.Id == cliente.Id);
+                clienteDB.Nombre = cliente.Nombre;
+                clienteDB.FechaDeNacimiento = cliente.FechaDeNacimiento;
+                clienteDB.TipoMembresiaId = cliente.TipoMembresiaId;
+                clienteDB.EstaSubscritoAlBoletinInformativo = cliente.EstaSubscritoAlBoletinInformativo;
+            }
+
+            contexto.SaveChanges();
             return RedirectToAction("Index", "Clientes");
         }
 
