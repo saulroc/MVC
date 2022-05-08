@@ -7,5 +7,7 @@ namespace MVC.ViewModels
     {
         public Cliente Cliente { get; set; }
         public IEnumerable<TipoMembresia> TiposMembresia { get; set; } = new List<TipoMembresia>();
+
+        public string Titulo => this.Cliente.Id == 0 ? "Nuevo Cliente" : "Editar Cliente";
     }
 }

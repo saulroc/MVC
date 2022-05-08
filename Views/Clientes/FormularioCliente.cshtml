@@ -4,14 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if(Model.Cliente.Id == 0)
-{
-    <h1>Nuevo Cliente</h1>
-}
-else
-{
-    <h1>Editar Cliente</h1>    
-}
+ <h1>@Model.Titulo</h1>
 
 @using (Html.BeginForm("Guardar", "Clientes"))
 {
