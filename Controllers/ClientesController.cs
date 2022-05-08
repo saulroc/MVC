@@ -63,6 +63,7 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Guardar(Cliente cliente)
         {
             if (!ModelState.IsValid)
