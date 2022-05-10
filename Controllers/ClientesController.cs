@@ -23,7 +23,7 @@ namespace MVC.Controllers
 
         public IActionResult Index()
         {
-            return View(contexto.Clientes.Include(c => c.TipoMembresia).ToList());
+            return View();
         }
 
         public IActionResult Nuevo()
