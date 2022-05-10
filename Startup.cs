@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace MVC
@@ -23,7 +25,17 @@ namespace MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin();
+                    });
+            });
             services.AddControllersWithViews();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //services.AddAutoMapper(c => c.AddProfile<MappingProfile>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,11 +50,13 @@ namespace MVC
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
+            }           
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthorization();
             
