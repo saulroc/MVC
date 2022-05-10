@@ -38,8 +38,10 @@ else
 @section scripts
 {
     @Html.Partial("_BootboxScriptsPartial")
+    @Html.Partial("_DataTableScriptsPartial")
     <script>
         $(document).ready(function () {
+            $("#clientes").DataTable();
 
             $("#clientes").on("click", ".js-borrar", function() {
                 let button = $(this);
