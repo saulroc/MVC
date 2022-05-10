@@ -12,12 +12,13 @@
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table id="clientes" class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Tipo de Membresia</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,8 +28,32 @@ else
                     <td>@cliente.Id</td>
                     <td>@Html.ActionLink(@cliente.Nombre, "Detalles", new { id = cliente.Id})</td>
                     <td>@cliente.TipoMembresia.Nombre</td>
+                    <td><button data-customer-id="@cliente.Id" class="btn btn-link js-borrar">borrar</button></td>
                 </tr>
             }
         </tbody>
     </table>
+}
+
+@section scripts
+{
+    @Html.Partial("_BootboxScriptsPartial")
+    <script>
+        $(document).ready(function () {
+            $("#clientes").on("click", ".js-borrar", function() {
+                let button = $(this);
+
+                if (confirm("¿Está seguro que desea borrar el cliente?")) {
+                    
+                    $.ajax({
+                        url: "/api/clientes/" + button.attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function() {
+                            button.parents("tr").remove();
+                        }
+                    });
+                }
+            });
+        })
+    </script>
 }
