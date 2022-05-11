@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVC.BaseDeDatos;
 using MVC.DTOs;
 using MVC.Models;
@@ -28,7 +29,7 @@ namespace MVC.Controllers.API
         [HttpGet]
         public IEnumerable<ClienteDTO> List()
         {
-            contexto.Clientes.Select(c => mapper.Map<ClienteDTO>(c)).ToList();
+            contexto.Clientes.Include(c => c.TipoMembresia).Select(c => mapper.Map<ClienteDTO>(c)).ToList();
             return contexto.Clientes.ProjectTo<ClienteDTO>(mapper.ConfigurationProvider).ToList();
         }
 
@@ -54,7 +55,7 @@ namespace MVC.Controllers.API
             contexto.Clientes.Add(cliente);
             contexto.SaveChanges();
             clienteDTO.Id = cliente.Id;
-            return Created(new Uri(Request.Path.Value + "/" + clienteDTO.Id),clienteDTO);
+            return Created(Request.Path.Value + "/" + clienteDTO.Id,clienteDTO);
         }
 
         [HttpPut]

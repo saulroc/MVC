@@ -13,6 +13,7 @@ namespace MVC.DTOs
 
         public bool EstaSubscritoAlBoletinInformativo { get; set; }
         public byte TipoMembresiaId { get; set; }
+        public string TipoMembresiaNombre { get; set; }
         public DateTime? FechaDeNacimiento { get; set; }
     }
 }
