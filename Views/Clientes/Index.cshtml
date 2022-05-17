@@ -24,7 +24,7 @@
     @Html.Partial("_DataTableScriptsPartial")
     <script>
         $(document).ready(function () {
-            $("#clientes").DataTable({
+            var table = $("#clientes").DataTable({
                 ajax: {
                     url: "/api/clientes",
                     dataSrc: ""
@@ -40,7 +40,7 @@
                         }
                     },
                     {
-                        data: "nombre",                        
+                        data: "tipoMembresiaNombre",                        
                     },
                     {
                         data: "id",
@@ -61,7 +61,7 @@
                             url: "/api/clientes/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function() {
-                                button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
                             }
                         });
                     }
