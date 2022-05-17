@@ -43,6 +43,7 @@ namespace MVC
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<DataBaseContext>();
             services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //services.AddAutoMapper(c => c.AddProfile<MappingProfile>());
         }
@@ -80,6 +81,7 @@ namespace MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
