@@ -10,16 +10,11 @@ namespace MVC.Controllers
     public class ClientesController : Controller
     {
 
-        private DataBaseContext contexto;
-        public ClientesController()
+        private readonly DataBaseContext contexto;
+        public ClientesController(DataBaseContext contexto)
         {
-            contexto = new DataBaseContext();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            contexto.Dispose();
-        }
+            this.contexto = contexto;
+        }        
 
         public IActionResult Index()
         {

@@ -1,10 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MVC.Models;
 
 namespace MVC.BaseDeDatos
 {
-    public class DataBaseContext : DbContext
+    public class DataBaseContext : IdentityDbContext
     {
+        public DataBaseContext(DbContextOptions<DataBaseContext> options)
+            : base(options)
+        {
+        }
+
         public DbSet<Cliente> Clientes { get; set;  }
         public DbSet<Pelicula> Peliculas { get; set;}
         public DbSet<TipoMembresia> TipoMembresia { get; set; }

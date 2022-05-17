@@ -10,16 +10,12 @@ namespace MVC.Controllers
 {
     public class PeliculasController : Controller
     {
-        private DataBaseContext contexto;
-        public PeliculasController()
+        private readonly DataBaseContext contexto;
+        public PeliculasController(DataBaseContext contexto)
         {
-            contexto= new DataBaseContext();
+            this.contexto= contexto;
         }
-        protected override void Dispose(bool disposing)
-        {
-            contexto.Dispose();
-        }
-
+        
         public IActionResult Aleatorio()
         {
             var pelicula = new Pelicula() {  Id = 1, Titulo = "Gorilas en la niebla"};
@@ -39,6 +35,16 @@ namespace MVC.Controllers
         public IActionResult Index()
         {
             return View(contexto.Peliculas.Include(p => p.Genero).ToList());
+        }
+
+        public IActionResult Nuevo()
+        {
+            var viewModel = new FormularioPeliculaViewModel()
+            {
+                Pelicula = new Pelicula(),
+                Genero = contexto.Genero.ToList()
+            };
+            return View("FormularioCliente", viewModel);
         }
 
         public IActionResult Detalles(int id)

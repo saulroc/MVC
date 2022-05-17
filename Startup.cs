@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC.BaseDeDatos;
 using MVC.DTOs;
 using System;
 using System.Collections.Generic;
@@ -33,6 +36,12 @@ namespace MVC
                         policy.AllowAnyOrigin();
                     });
             });
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<DataBaseContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<DataBaseContext>();
             services.AddControllersWithViews();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //services.AddAutoMapper(c => c.AddProfile<MappingProfile>());
@@ -58,6 +67,7 @@ namespace MVC
             app.UseRouting();
             app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             
             app.UseEndpoints(endpoints =>

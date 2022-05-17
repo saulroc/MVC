@@ -20,9 +20,9 @@ namespace MVC.Controllers.API
         private readonly DataBaseContext contexto;
         private readonly IMapper mapper;
 
-        public ClientesController(IMapper mapper)
+        public ClientesController(DataBaseContext contexto, IMapper mapper)
         {
-            contexto = new DataBaseContext();
+            this.contexto = contexto;
             this.mapper = mapper;
         }
 
