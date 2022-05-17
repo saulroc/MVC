@@ -17,7 +17,7 @@ namespace MVC.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("Delete * From Genero Where Id in (1,2,3,4, 5, 6, 7)");
+            migrationBuilder.Sql("Delete From Genero Where Id in (1,2,3,4, 5, 6, 7)");
         }
     }
 }

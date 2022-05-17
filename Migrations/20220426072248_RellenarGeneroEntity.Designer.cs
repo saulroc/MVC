@@ -52,9 +52,7 @@ namespace MVC.Migrations
             modelBuilder.Entity("MVC.Models.Genero", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -80,8 +78,8 @@ namespace MVC.Migrations
                     b.Property<DateTime>("FechaDeRegistro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GeneroId")
-                        .HasColumnType("int");
+                    b.Property<byte>("GeneroId")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(max)");
