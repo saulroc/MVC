@@ -44,7 +44,53 @@ namespace MVC.Controllers
                 Pelicula = new Pelicula(),
                 Genero = contexto.Genero.ToList()
             };
-            return View("FormularioCliente", viewModel);
+            return View("FormularioPelicula", viewModel);
+        }
+
+        public IActionResult Editar(int id)
+        {
+            var pelicula = contexto.Peliculas.Include(c => c.Genero).SingleOrDefault(c => c.Id == id);
+            if (pelicula == null)
+                return NotFound();
+            else
+            {
+                var viewModel = new FormularioPeliculaViewModel()
+                {
+                    Pelicula = pelicula,
+                    Genero = contexto.Genero.ToList()
+                };
+                return View("FormularioPelicula", viewModel);
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Guardar(Pelicula pelicula)
+        {
+            if (!ModelState.IsValid)
+                return View("FormularioPelicula", new FormularioPeliculaViewModel()
+                {
+                    Pelicula = pelicula,
+                    Genero = contexto.Genero.ToList()
+                });
+
+            if (pelicula.Id == 0)
+            {
+                contexto.Peliculas.Add(pelicula);
+            }
+            else
+            {
+                var peliculaDB = contexto.Peliculas.Single(c => c.Id == pelicula.Id);
+                peliculaDB.Titulo = pelicula.Titulo;
+                peliculaDB.FechaDeRealizacion = pelicula.FechaDeRealizacion;
+                peliculaDB.FechaDeRegistro = pelicula.FechaDeRegistro;
+                peliculaDB.GeneroId = pelicula.GeneroId;
+                peliculaDB.Cantidad = pelicula.Cantidad;
+            }
+
+            contexto.SaveChanges();
+            return RedirectToAction("Index", "Peliculas");
         }
 
         public IActionResult Detalles(int id)

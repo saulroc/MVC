@@ -5,6 +5,7 @@
 }
 
 <h1>Peliculas</h1>
+@Html.ActionLink("Nueva Película", "Nuevo", "Peliculas", null, new { @class="btn btn-info" })
 @if(Model.Count == 0)
 {
     <h2>No hay películas cargadas en el sistema todavía...</h2>
@@ -24,7 +25,7 @@ else
             {
                 <tr>
                     <td>@pelicula.Id</td>
-                    <td>@Html.ActionLink(@pelicula.Titulo, "Detalles", new { id = pelicula.Id})</td>
+                    <td>@Html.ActionLink(@pelicula.Titulo, "Edicion", new { id = pelicula.Id})</td>
                     <td>@pelicula.Genero.Nombre</td>
                 </tr>
             }        

@@ -1,0 +1,45 @@
+﻿@model MVC.ViewModels.FormularioPeliculaViewModel
+@{
+    ViewData["Title"] = Model.Pelicula.Id == 0 ? "Nuevo" : "Edición";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ <h1>@Model.Titulo</h1>
+
+@using (Html.BeginForm("Guardar", "Peliculas"))
+{
+    @Html.ValidationSummary(true,"Por favor, corrija los siguientes errores.", new {@class="text-danger"})
+    <div class="form-group">
+        @Html.LabelFor(m => m.Pelicula.Titulo)
+        @Html.TextBoxFor(m => m.Pelicula.Titulo, new { @class="form-control md-6" } )
+        @Html.ValidationMessageFor(m => m.Pelicula.Titulo, "", new { @class="text-danger"})
+    </div>    
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Pelicula.GeneroId, "Tipo de Genero")
+        @Html.DropDownListFor(m => m.Pelicula.GeneroId, new SelectList(Model.Genero, "Id", "Nombre"), "Seleccione un tipo de genero", new { @class="form-control" } )
+        @Html.ValidationMessageFor(m => m.Pelicula.GeneroId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Pelicula.FechaDeRealizacion, "Fecha de Realización")
+        @Html.TextBoxFor(m => m.Pelicula.FechaDeRealizacion, new { @class="form-control md-6" } )
+        @Html.ValidationMessageFor(m => m.Pelicula.FechaDeRealizacion)
+    </div>
+
+    <div class="form-check">
+        @Html.LabelFor(m => m.Pelicula.Cantidad, "Cantidad")
+        @Html.TextBoxFor(m => m.Pelicula.Cantidad, new { @class="form-control md-6" } )
+        @Html.ValidationMessageFor(m => m.Pelicula.Cantidad)
+    </div>
+
+    @Html.HiddenFor(m => m.Pelicula.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Guardar</button>
+   
+}
+
+@section scripts
+{
+    @Html.Partial("_ValidationScriptsPartial")
+}
