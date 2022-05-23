@@ -10,6 +10,8 @@ namespace MVC.DTOs
             
             CreateMap<Cliente, ClienteDTO>();
             CreateMap<ClienteDTO, Cliente>();
+
+            CreateMap<Pelicula, PeliculaDTO>().ReverseMap();
         }
 
     }
